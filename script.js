@@ -34,7 +34,6 @@ for (let i = 0; i < 7 ; i++) {
 	if (arr[i][0] === '2' || arr[i][0] === '4') {
 		console.log(arr[i]);
 	}
-
 }
 console.log(arr);
 
@@ -42,22 +41,50 @@ console.log(arr);
 // — Рядом с каждым числом написать оба делителя данного числа
 //     Например: “Делители этого числа: 1 и n”
 
-// 1 способ
-let n = 100;
+// 1 способ использование функций и циклов
+
+const START = 0,
+	END = 100;
+
+function checkPrime(num) {
+  for (let i = 2; i < num; i++) {
+    if ( num % i === 0) {
+			return false;
+		}
+  }
+  if (num > 1) {
+		return true;
+	}
+}
+
+function getPrimeNum(start, end) {
+  for (let i = start; i <= end; i++) {
+    if (checkPrime(i)) {
+			console.log('Число ' + i + ' простое и его делители 1 и ' + i);
+		}
+  }
+}
+
+getPrimeNum(START, END);
+
+// 2 способ цикл в цикле с меткой
+let number = 100;
 
 nextPrime:
-for (let i = 2; i <= n; i++) { 
+for (let i = 2; i <= number; i++) { 
 
   for (let j = 2; j < i; j++) { 
-    if (i % j === 0) continue nextPrime; 
+    if (i % j === 0) {
+			continue nextPrime;
+		} 
   }
   console.log(i + '    Делители этого числа: 1 и ' + i );
 }
 
-// 2 способ
+// 3 способ
 console.warn('2 вариант');
 
-for (let i = 2; i <= n; i++) { 
+for (let i = 2; i <= number; i++) { 
 	
 // if (i === 2) {
 // 	console.log(i + '    Делители этого числа: 1 и ' + i );
