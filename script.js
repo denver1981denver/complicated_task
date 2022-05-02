@@ -1,51 +1,30 @@
 'use strict';
 
-// Переменная lang может принимать 2 значения: 'ru' 'en'.
+//  Создайте функцию, которая принимает 1 аргумент (название произвольное)
 
-// Написать условия при котором в зависимости от значения
-// lang будут выводится дни недели на русском или английском языке. 
-//Решите задачу
+// — Если в качестве аргумента передана не строка - функция оповещает об этом пользователя
 
-// a.через if, 
+// — В полученной (как аргумент) строке функция должна убрать все пробелы в начале и в конце
 
-// b.через switch-case 
+// — Если строка более 30 знаков - то после 30го символа часть текста скрывается и 
+// вместо них появляются три точки (...)
 
-// c.через многомерный массив без ифов и switch.
+function argument (value) {
+	if (value !== String(value)) {
+		alert('Передана не строка');
+	}
 
-const lang = prompt('Введите язык: ru или en','ru');
+	value = value.trim();
 
-// if (lang.toLowerCase() === 'ru') {
-//   alert('Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье');
-// } else if(lang.toLowerCase() === 'en') {
-//   alert('Monday, Tuesday, Wedhesday, Thursday, Friday, Saturday, Sunday');
-// } else {
-//   alert('Неверный формат языка');
-// }
-
-switch(lang.toLocaleLowerCase()) {
-  case 'ru':
-  	alert('Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье');
-   	break;
-  case 'en':
-    alert('Monday, Tuesday, Wedhesday, Thursday, Friday, Saturday, Sunday');
-   	break;
-	default:	 
-		alert('Неверный формат языка');
+	if (value.length > 30) {
+		let data = value.substr(0,31) + '...';
+		return data;
+	}
+	return value;
 }
 
-// У нас есть переменная namePerson. Если значение этой переменной 
-// “Артем” то вывести в консоль “директор”, если значение “Максим” то вывести в консоль “преподаватель”, 
-// с любым другим значением вывести в консоль “студент”
+console.log(argument('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'));
 
-// 	Решить задачу с помощью нескольких тернарных операторов, без использования if или switch
-
-const userData = prompt('Введите логин');
-
-const namePerson = (userData.toLocaleLowerCase() === 'артём') ? 'директор' :
-
-(userData.toLocaleLowerCase() === 'максим') ? 'преподаватель' : 'студент';
-
-console.log(namePerson);
 
 
 
