@@ -36,6 +36,8 @@
 
 // Загаданное число и оставшиеся кол-во попыток должно храниться «в замыкании»
 
+// 1 способ
+
 const isNumber = function(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
   };
