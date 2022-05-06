@@ -36,55 +36,82 @@
 
 // Загаданное число и оставшиеся кол-во попыток должно храниться «в замыкании»
 
-// 1 способ
-
-const isNumber = function(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n);
-  };
-  
-  function savingRandomNumber() {
-  
-  const hiddenNumber = Math.round(Math.random()*100);
-  let count = 10;
-	
-  function game(attempts) {
-	
-		if(count === 0) {
-			if(confirm('Попытки закончились, хотите сыграть еще?')) {
-				savingRandomNumber();
-			} else {
-				return;
-			}
-		} else {
-			if(attempts !== false) {
-				count--;
-			}
-
-			const userData = prompt('Угадай число от 1 до 100');
-			
-			if(userData === null) {
-					alert('Игра окончена');
-				} else if(!isNumber(userData)) {
-					alert('Введите число');
-					game(false);
-				} else if (hiddenNumber === +userData) {
-					alert('Поздравляю, Вы угадали');
-					if (confirm('Хотели бы сыграть еще?')) {
-						savingRandomNumber();
-					}
-				} else if (hiddenNumber < +userData) {
-					alert(`Загаданное число меньше,осталось попыток ${count}`);
-					game(true);
-				} else {
-					alert(`Загаданное число больше,осталось попыток ${count}`);
-					game(true);
-				} 
-			}
-		}
-		game();
-  }
-  savingRandomNumber();
-
 // 2 способ
 
+const getRandomInt = function(min,max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const numCheck = function(n){
+	return !isNaN(parseInt(n)) && isFinite(n);
+};
+
+const getNumber = function(str) {
+	const numUser = prompt(str);
+
+	if(numUser === null) {
+		return null;
+	}
+	if (numCheck(numUser)) {
+		return +numUser;
+	}
+	alert('Кажется вы забыли ввести число, попробуйте ещё раз!');
+	getNumber(str);
+
+};
+
+const getCounter = function() {
+	let counter = 0;
+	return function() {
+		return counter++;
+	};
+};
+
+const gameBot = function (attemps, min, max) {
+	attemps = attemps || 10;
+	min = min || 0;
+	max = max || 100;
+
+	const random = getRandomInt(min, max);
+	const counter = getCounter();
+
+	( function checkNumber() {
 	
+		const count = counter();
+
+		if (count < attemps) {
+			const number = getNumber('Попробуйте угадать число от ' + min + ' до ' + max);
+			if(number === null) {
+				return alert('До свидания');
+			}
+			if (number > random) {
+				alert('Загаданное число меньше чем ваше!');
+				return checkNumber();
+			}
+			if (number < random) {
+				alert('Загаданное число больше чем ваше!');
+				return checkNumber();
+			}
+			if (number === random) {
+				alert('Поздравляем! Вы угадали!');
+			}
+		} else {
+			alert ('Количество попыток закончилось! Было загадано число ' + random);
+		}
+
+	const questAC = confirm('Хотите сыграть ещё?');
+
+		if (questAC) {
+			alert('Отлично начинаем!');
+			gameBot(attemps, min, max);
+		} else {
+			alert('Спасибо за игру, ещё увидимся');
+		}
+	})();
+};
+
+gameBot(10, 0, 100);
+
+
